@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Code Search</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <style>
+
+    .Result {
+        padding-top: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-top: 1px solid #eee;
+    }
+
+    .Result__Title h4 {
+        margin: 0;
+        font-size: 13px;
+        min-height: 25px;
+        line-height: 1.2;
+        font-weight: bold;
+    }
+
+    .Result__Summary {
+        float: left;
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 3px;
+        position: relative;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+    }
+
+    .Line {
+        float: left;
+        width: 100%;
+        height: 18px;
+    }
+
+    .Line__Number {
+        float: left;
+        width: 50px;
+        font-size: 12px;
+        line-height: 18px;
+        text-align: right;
+        border: solid #eee;
+        color: rgba(0,0,0,0.3);
+        border-width: 0 1px 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+
+    .Line__Number a {
+        color: inherit;
+        padding: 0 10px;
+    }
+
+    .Contents__Inner {
+        width:100%;
+    }
+
+    .Contents_Content {
+        color: #333;
+        width: 100%;
+        height: 18px;
+        font-size: 12px;
+        overflow: visible;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    }
+
+    .Line__Number.divider, .Contents__Line.divider code {
+        background-color: #f8fafd;
+    }
+
+    .Contents__Line.divider {
+        background-color: #f8fafd;
+        padding-left: 0;
+    }
+
+    .Contents__Line code {
+        padding: 0;
+        width: 100%;
+        height: 18px;
+        font-size: 12px;
+        background: white;
+        overflow-x: visible;
+    }
+
+    code span.match {
+        color: #333;
+        padding: 2px;
+        margin: 0 -2px;
+        font-weight: bold;
+        border-radius: 3px;
+        font-style: normal;
+        background-color: rgba(255,255,140,0.5);
+    }
+
+    .Contents {
+        margin-left: 50px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+    .Lines {
+        width: 50px;
+        position: absolute;
+    }
+
+    .Contents__Line {
+            white-space: pre;
+            padding-left: 10px;
+    }
+
+    </style>
+</head>
+<body>
+    {{{body}}}
+    <script>
+        var code = document.querySelectorAll('.Contents__Line code');
+        Array.from(code).forEach(function (block) {
+            hljs.highlightBlock(block);
+        });
+    </script>
+</body>
+</html>

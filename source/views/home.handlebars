@@ -1,0 +1,78 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Code Search</h1>
+            <form method="get" action="/">
+                <div class="form-group">
+                    <input class="form-control" value="{{query}}" placeholder="Search" name="query" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="{{repository}}" placeholder="Respository" name="repository" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" value="{{repository}}" placeholder="Branch" name="branch" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-default" type="submit" value="Search"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{#each results}}
+        <div class="row">
+            <div class="col-xs-12">
+                    <div class="Result">
+                        <div class="Result__Title">
+                            {{#equal type 'GITHUB' }}
+                                <h4><a href="https://github.com/{{this.repository}}/blob/{{reference}}/{{this.name}}">{{this.name}}</a></h4>
+                                <h4><a href="https://github.com/{{this.repository}}">{{this.repository}}</a></h4>
+                            {{/equal}}
+                            <p></p>
+                        </div>
+                        <div class="Result__Summary">
+                            <div class="Lines">
+                                {{#each this.summary}}
+                                    <div class="Line__Number {{this.extra}}">
+                                        {{#equal ../type 'GITHUB' }}
+                                            <a href="https://github.com/{{../this.repository}}/blob/{{../reference}}/{{../this.name}}#L{{this.line_number}}">
+                                                {{this.line_number}}
+                                            </a>
+                                        {{/equal}}
+                                    </div>
+                                {{/each}}
+                            </div>
+                            <div class="Contents">
+                                <div class="Contents__Inner">
+                                    {{#each this.summary}}
+                                        <div class="Contents__Line  {{this.extra}}"><code>{{{this.content}}}</code></div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    {{/each}}
+    <div class="row">
+        <div class="col-xs-12">
+            <nav>
+              <ul class="pagination">
+                  {{#each pagination}}
+                      {{#equal this ../page}}
+                      <li class="active">
+                      {{else}}
+                      <li class="link">
+                      {{/equal}}
+                          <a href="/?query={{../query}}&repo={{../repository}}&page={{this}}">
+                              {{this}}
+                          </a>
+                      </li>
+                  {{/each}}
+              </ul>
+            </nav>
+
+        </div>
+    </div>
+
+</div>

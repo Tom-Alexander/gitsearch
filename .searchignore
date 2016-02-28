@@ -1,0 +1,8 @@
+*.png
+*.jpg
+*.svg
+*.gif
+*.tif
+*.raw
+.searchignore
+*.log
