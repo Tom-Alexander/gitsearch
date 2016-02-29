@@ -10,7 +10,7 @@
                     <input class="form-control" value="{{repository}}" placeholder="Respository" name="repository" />
                 </div>
                 <div class="form-group">
-                    <input class="form-control" value="{{repository}}" placeholder="Branch" name="branch" />
+                    <input class="form-control" value="{{reference}}" placeholder="Branch/Tag" name="reference" />
                 </div>
                 <div class="form-group">
                     <input class="btn btn-default" type="submit" value="Search"/>
@@ -73,7 +73,7 @@
                       {{else}}
                       <li class="link">
                       {{/equal}}
-                          <a href="/?query={{../query}}&repo={{../repository}}&page={{this}}">
+                          <a href="/?query={{../query}}&repo={{../repository}}&reference={{../reference}}&page={{this}}">
                               {{this}}
                           </a>
                       </li>

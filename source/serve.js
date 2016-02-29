@@ -42,12 +42,12 @@ function serve(host, index, port) {
       const refFilter = new Filter();
       const fileFilter = new Filter();
       const query = request.query || {};
-      const branch = 'master';
-      const content = query.query ? query.query : null;
       const page = query.page ? query.page : 1;
       const start = ((page - 1) * RESULTS_PER_PAGE);
+      const content = query.query ? query.query : null;
+      const reference = query.reference ? quer.reference : 'master';
       search('ref',
-          refFilter.filter('term', 'shorthand', branch).build()
+          refFilter.filter('term', 'shorthand', reference).build()
       ).then(refs => refs.hits.hits.map(hit => hit._source.oid))
       .then(refs => {
           return search('file', fileFilter.query('match', 'content', content)
@@ -74,8 +74,8 @@ function serve(host, index, port) {
               response.render('home', {
                   page: page,
                   query: content,
-                  branch: branch,
                   results: results,
+                  reference: reference,
                   repository: query.repository,
                   pagination: createArray(length),
                   helpers: { equal: equals }
