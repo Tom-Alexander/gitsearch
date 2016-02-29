@@ -19,7 +19,7 @@ yargs.command('index', 'indexes a git repository', (yargs) => {
     .option('path', { describe: 'path to repository' })
     .option('index', { describe: 'elasticsearch index', default: 'repositories' })
     .option('type', { describe: 'type of repository', choices: ['GITHUB', 'BITBUCKET'] })
-    .demand(['host', 'name', 'index', 'type'])
+    .demand(['host', 'name', 'index'])
   })
 });
 

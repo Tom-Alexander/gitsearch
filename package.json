@@ -1,5 +1,5 @@
 {
-  "name": "code-search",
+  "name": "gitsearch",
   "version": "0.0.1",
   "description": "git repository indexer and client for elasticsearch",
   "main": "index.js",
@@ -12,22 +12,15 @@
     "escape-html": "1.0.3",
     "express": "4.13.4",
     "express-handlebars": "3.0.0",
-    "file-type": "3.7.0",
     "mime": "1.3.4",
     "minimatch": "^3.0.0",
     "nodegit": "0.11.2",
     "tmp": "0.0.28"
   },
   "devDependencies": {
-    "babel": "^6.3.26",
-    "babel-cli": "^6.4.5",
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
     "chai": "^3.5.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^4.0.0",
     "mocha": "^2.4.5",
-    "webpack": "^1.12.11"
   }
 }

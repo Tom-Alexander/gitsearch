@@ -1,53 +1,87 @@
-# code-search
+# Gitsearch
 
-This is a service for indexing and searching a git repository. Provides github
-and bitbucket web hooks for automatic indexing.
+This is a service for indexing and searching git repositories. Provides github
+and bitbucket web hooks for automatic indexing. Allows searching within branches/tags across repositories.
 
 ## Installing
 
-Install ('https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html')[elasticsearch], then:
+Make sure your have [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html) Installed, then install gitsearch with:
 
 ```
-npm install code-search -g
+npm install gitsearch -g
 ```
-
 ## Usage
+### Indexing
+#### `gitsearch index remote`
+Indexes a git repository from a remote machine.
 
-## Hook server
+#### `gitsearch index local`
+Indexes a git repository from your local machine.
 
-```
-code-search --hook
-```
+### Serve
+#### `gitsearch serve`
+Starts the client application for searching.
 
-### Manual indexing:
+### Watch
+#### `gitsearch watch`
+Starts the client application for watching github and bitbucket webhooks.
 
-```
-code-search --local ../data/foo --type GITHUB --name data/foo --index repositories --host localhost:9200
-```
+### Arguments
 
-## Configuration
+##### `--url <string>`
+The path to the repository, for example `https://github.com/Tom-Alexander/gitsearch.git`. This argument is *required* for local repositories and is not set by default.
 
-### `--client`
-Listens on port `5900` and waits for requests from `/bitbucket` and `/github`
+##### `--path <string>`
+The path to the repository, for example `~/gitsearch`. This argument is *required* for local repositories and is not set by default.
 
-### `--hook`
-Listens on port `5900` and waits for requests from `/bitbucket` and `/github`
+##### `--name <string>`
+The name of the repository, for example `Tom-Alexander/gitsearch`. This argument is *required* and is not set by default.
 
-### `--local <path>`
-Uses a local repository as the source.
+##### `--type <GITHUB|BITBUCKET>`
+The type of repository, for example `GITHUB`. This argument is *optional* and is not set by default.
 
-### `--remote <path>`
-Uses a remote repository as the source. Clones the repository to a temporary directory.
+##### `--host <string>`
+The elasticsearch host, for example `localhost:9200`. This argument is *required* but `localhost:9200` will used by default.
 
-### `--host <name>`
-Elasticsearch host
+##### `--index <string>`
+The elasticsearch index, for example `repositories`. This argument is *required* but `repositories` will used by default.
 
-### `--index <name>`
-Elasticsearch index
+##### `--port <integer>`
+The port for the server to listen to, for example `5900`. This argument is *optional*  for `serve` and `watch`.
 
-### `--type <type>`
-This can be any string, but using `GITHUB` or `BITBUCKET` will correctly
-handle URLs on the search results.
+##### `--user <integer>`
+The username for the basic auth credentials. This argument is *optional*  for `watch`.
 
-### `--name <name>`
-Name of the repository.
+##### `--pass <integer>`
+The password for the basic auth credentials. This argument is *optional*  for `watch`.
+
+## Ignoring files
+The indexer will look for glob path patterns in a file named `.gitsearchignore` in the `master` branch for your repository. Paths that match these patterns will be ignored, along with the patterns in the  `.gitsearchignore` file in this library.
+
+## API
+#### `indexFromURL(url, type, name, index)`
+#### `indexFromPath(path, type, name, index)`
+#### `indexFromRepository(name, type, source, index)`
+
+## License
+The MIT License (MIT)
+
+Copyright (c) Tom Alexander
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
