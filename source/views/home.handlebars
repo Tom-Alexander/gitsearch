@@ -28,6 +28,10 @@
                                 <h4><a href="https://github.com/{{this.repository}}/blob/{{reference}}/{{this.name}}">{{this.name}}</a></h4>
                                 <h4><a href="https://github.com/{{this.repository}}">{{this.repository}}</a></h4>
                             {{/equal}}
+                            {{#equal type 'BITBUCKET' }}
+                                <h4><a href="https://bitbucket.org/{{this.repository}}/src/{{reference}}/{{this.name}}">{{this.name}}</a></h4>
+                                <h4><a href="https://bitbucket.org/{{this.repository}}">{{this.repository}}</a></h4>
+                            {{/equal}}
                             <p></p>
                         </div>
                         <div class="Result__Summary">
@@ -36,6 +40,11 @@
                                     <div class="Line__Number {{this.extra}}">
                                         {{#equal ../type 'GITHUB' }}
                                             <a href="https://github.com/{{../this.repository}}/blob/{{../reference}}/{{../this.name}}#L{{this.line_number}}">
+                                                {{this.line_number}}
+                                            </a>
+                                        {{/equal}}
+                                        {{#equal ../type 'BITBUCKET' }}
+                                            <a href="https://bitbucket.org/{{../this.repository}}/src/{{../reference}}/{{../this.name}}#-{{this.line_number}}">
                                                 {{this.line_number}}
                                             </a>
                                         {{/equal}}
