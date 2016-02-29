@@ -44,18 +44,6 @@ function ignoreList(repository) {
 }
 
 /**
- * Returns the git tree entries from a reference
- * @param  {NodeGit.Reference} reference
- * @return {Promise}
- */
-function entries(reference) {
-    return Git.Commit
-        .lookup(reference.repo, reference.target())
-        .then(commit => commit.getTree())
-        .then(tree => tree.entries());
-}
-
-/**
  * Creates an object holding every document in the repository, with its
  * corresponding reference relationships
  * @param  {Object} documents
@@ -236,7 +224,6 @@ function indexFromURL(url, type, name, index) {
 }
 
 module.exports.indexer = indexer;
-module.exports.entries = entries;
 module.exports.ignoreList = ignoreList;
 module.exports.getExtension = getExtension;
 module.exports.indexFromURL = indexFromURL;
