@@ -41,10 +41,10 @@ function arrayWindow(array, line, term, buffer) {
   const u_end = index + (2 * buffer);
   const u_start = index - (2 * buffer);
   let end = l_start < 0 ? u_end : l_end;
-  let start = l_end < (length - 1) ? u_start : l_start;
+  let start = l_end > (length - 1) ? u_start : l_start;
   start = start < 0 ? 0 : start;
   end = end > (length - 1) ? (length - 1) : end;
-  const segment = array.slice(start, end);
+  const segment = array.slice(start, end + 1);
   return segment.reduce(
       (a, v) => Object.assign(a, {
           [v.index]: {
