@@ -33,11 +33,13 @@ function equals(left, right, options) {
 }
 
 function serve(host, index, port) {
+  
   const app = express();
   app.listen(port);
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
   app.set('view engine', 'handlebars');
   const search = searcher(host, index);
+
   app.get('/', (request, response) => {
       const refFilter = new Filter();
       const fileFilter = new Filter();
@@ -83,6 +85,9 @@ function serve(host, index, port) {
           }).catch(e => console.log(e))
       });
   });
+
+  return app;
+
 }
 
 module.exports = serve;

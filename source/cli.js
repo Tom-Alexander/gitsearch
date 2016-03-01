@@ -76,9 +76,15 @@ const actions = {
 
   watch: args => {
     return watch(
-      args.host,
-      args.index,
-      args.port
+      args.port,
+      args.user,
+      args.pass,
+      (url, type, name) => indexer.indexFromURL(
+        url,
+        type,
+        name,
+        indexer.indexer(args.host, args.index)
+      )
     );
   }
 
