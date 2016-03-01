@@ -149,6 +149,24 @@ describe('format', () => {
 
   describe('highlightFile', () => {
 
+    it('highlight multiple discontinuous matches', () => {
+      assert.deepEqual(
+        format.highlightFile(
+          'foo\na\nb\nc\nd\ne\nf\ng\nh\ni\nfoo\nj\nk\nl\nm\n',
+          'foo',
+          1),
+        [
+          {content: '<span class=\"match\">foo</span>', extra: '', line_number: 1},
+          {content: 'a', extra: '', line_number: 2},
+          {content: 'b', extra: '', line_number: 3},
+          {content: '', extra: 'divider', line_number: '...'},
+          {content: 'i', extra: '', line_number: 10},
+          {content: '<span class=\"match\">foo</span>', extra: '', line_number: 11},
+          {content: 'j', extra: '', line_number: 12},
+        ]
+      );
+    });
+
     it('highlight correctly with one line', () => {
       assert.deepEqual(
         format.highlightFile(
@@ -180,24 +198,6 @@ describe('format', () => {
         ]
       );
     });
-  });
-
-  it('highlight multiple dicontinuous matches', () => {
-    assert.deepEqual(
-      format.highlightFile(
-        'foo\na\nb\nc\nd\ne\nf\ng\nh\ni\nfoo\nj\nk\nl\nm\n',
-        'foo',
-        1),
-      [
-        {content: '<span class=\"match\">foo</span>', extra: '', line_number: 1},
-        {content: 'a', extra: '', line_number: 2},
-        {content: 'b', extra: '', line_number: 3},
-        {content: '', extra: 'divider', line_number: '...'},
-        {content: 'i', extra: '', line_number: 10},
-        {content: '<span class=\"match\">foo</span>', extra: '', line_number: 11},
-        {content: 'j', extra: '', line_number: 12},
-      ]
-    );
   });
 
 });
