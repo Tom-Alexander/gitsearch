@@ -28,12 +28,12 @@ function getExtension(name) {
  * @return {Promise}
  */
 function ignoreList(repository) {
-    return fread('./.searchignore', 'utf8')
+    return fread('./.gitsearchignore', 'utf8')
         .catch(file => '')
         .then(file => file.split('\n'))
         .catch(() => [])
         .then(local => repository.getMasterCommit()
-            .then(commit => commit.getEntry('.searchignore'))
+            .then(commit => commit.getEntry('.gitsearchignore'))
             .then(entry => entry.getBlob())
             .then(blob => blob.content())
             .then(buffer => buffer.toString('utf8'))
