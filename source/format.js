@@ -27,7 +27,6 @@ function formatFile(object) {
     const continuous = hasNext && line.line_number + 1 === next.line_number;
     return !hasNext || continuous ? acc.concat([line]) : acc.concat([line, {
       content: '',
-      index: null,
       extra: 'divider',
       line_number: '...'
   }]);

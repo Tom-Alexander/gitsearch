@@ -4,6 +4,9 @@
   "description": "git repository indexer and client for elasticsearch",
   "main": "index.js",
   "author": "Tom Alexander <npm@tomalexander.co.nz>",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha spec"
+  },
   "license": "MIT",
   "dependencies": {
     "bluebird": "3.3.1",
@@ -19,8 +22,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^4.0.0",
     "mocha": "^2.4.5",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^4.0.0"
   }
 }
