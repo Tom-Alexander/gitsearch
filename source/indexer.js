@@ -174,7 +174,8 @@ function indexer(host, indexName) {
 function indexFromRepository(source, type, name, index) {
     return ignoreList(source).then(ignores =>
         source.getReferences(Git.Reference.TYPE.OID)
-            .then(refs => fromReferences(refs, name, type, ignores)
+          .then(refs => refs.filter(ref => ref.isBranch() || ref.isTag()))
+          .then(refs => fromReferences(refs, name, type, ignores)
                 .then(files => Object.keys(files).map(v => files[v]))
                 .then(files => Promise.all([
                     Promise.map(files, file => index(file.id, 'file', file)),
