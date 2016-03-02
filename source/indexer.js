@@ -44,6 +44,23 @@ function ignoreList(repository) {
 }
 
 /**
+ * creates an options object for git clones
+ * @return {Object}
+ */
+function cloneOptions() {
+  return {
+    fetchOpts: {
+      callbacks: {
+        certificateCheck: () => 1,
+        credentials: (url, user) => Git.Cred.sshKeyFromAgent(
+          user
+        )
+      }
+    }
+  };
+}
+
+/**
  * Creates an object holding every document in the repository, with its
  * corresponding reference relationships
  * @param  {Object} documents
@@ -216,7 +233,7 @@ function indexFromPath(path, type, name, index) {
  */
 function indexFromURL(url, type, name, index) {
   return tmp().then(
-        directory => Git.Clone(url, directory)
+        directory => Git.Clone(url, directory, cloneOptions())
             .then(repository => indexFromRepository(
               repository,
                 type,
@@ -228,6 +245,7 @@ function indexFromURL(url, type, name, index) {
 module.exports.indexer = indexer;
 module.exports.ignoreList = ignoreList;
 module.exports.getExtension = getExtension;
+module.exports.cloneOptions = cloneOptions;
 module.exports.indexFromURL = indexFromURL;
 module.exports.indexFromPath = indexFromPath;
 module.exports.fromReferences = fromReferences;
