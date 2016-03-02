@@ -33,7 +33,7 @@ function equals(left, right, options) {
 }
 
 function serve(host, index, port) {
-  
+
   const app = express();
   app.listen(port);
   app.engine('handlebars', exphbs({defaultLayout: 'main'}));
@@ -47,7 +47,7 @@ function serve(host, index, port) {
       const page = query.page ? query.page : 1;
       const start = ((page - 1) * RESULTS_PER_PAGE);
       const content = query.query ? query.query : null;
-      const reference = query.reference ? quer.reference : 'master';
+      const reference = query.reference ? query.reference : 'master';
       search('ref',
           refFilter.filter('term', 'shorthand', reference).build()
       ).then(refs => refs.hits.hits.map(hit => hit._source.oid))
@@ -63,22 +63,26 @@ function serve(host, index, port) {
               .from(start)
               .build()
           ).then(data => {
+              const term = content ? content : '';
               const length = Math.ceil(data.hits.total / RESULTS_PER_PAGE);
-              const results = data.hits.hits
+              const results = content ? data.hits.hits
                   .filter(hit => !!hit._source.content)
                   .map(hit => ({
-                  summary: format.highlightFile(hit._source.content, content, 1),
+                  summary: format.highlightFile(hit._source.content, term, 1),
                   name: hit._source.path,
                   type: hit._source.type,
                   reference: hit._source.references[0],
                   repository: hit._source.repository
-              }));
+              })) : [];
               response.render('home', {
                   page: page,
+                  pages: length,
                   query: content,
                   results: results,
                   reference: reference,
                   repository: query.repository,
+                  previousPage: page - 1 > 0 ? page - 1 : null,
+                  nextPage: page + 1 < length ? page + 1 : null,
                   pagination: createArray(length),
                   helpers: { equal: equals }
               });

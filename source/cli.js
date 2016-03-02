@@ -92,9 +92,9 @@ const actions = {
 
 };
 
-process(yargs.help().argv);
+main(yargs.help().argv);
 
-function process(args) {
+function main(args) {
   if (args._.length) {
     if(actions[args._[0]]) {
       return actions[args._[0]](args);

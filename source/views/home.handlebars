@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12">
-            <h1>Code Search</h1>
+            <h1>Gitsearch</h1>
             <form method="get" action="/">
                 <div class="form-group">
                     <input class="form-control" value="{{query}}" placeholder="Search" name="query" />
@@ -66,22 +66,12 @@
     <div class="row">
         <div class="col-xs-12">
             <nav>
-              <ul class="pagination">
-                  {{#each pagination}}
-                      {{#equal this ../page}}
-                      <li class="active">
-                      {{else}}
-                      <li class="link">
-                      {{/equal}}
-                          <a href="/?query={{../query}}&repo={{../repository}}&reference={{../reference}}&page={{this}}">
-                              {{this}}
-                          </a>
-                      </li>
-                  {{/each}}
+              <p>Page {{page}} of {{pages}}</p>
+              <ul class="pagination pagination-sm">
+                  {{#if previousPage}}<li class="link"><a href="/?query={{query}}&repo={{repository}}&reference={{reference}}&page={{previousPage}}">«</a></li>{{/if}}
+                  {{#if nextPage}}<li class="link"><a href="?query={{query}}&repo={{repository}}&reference={{reference}}&page={{nextPage}}">»</a></li>{{/if}}
               </ul>
             </nav>
-
         </div>
     </div>
-
 </div>
