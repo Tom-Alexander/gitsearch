@@ -1,11 +1,13 @@
 # Gitsearch
 
-This is a service for indexing and searching git repositories. Provides github
+[![Build Status](https://travis-ci.org/Tom-Alexander/gitsearch.svg?branch=master)](https://travis-ci.org/Tom-Alexander/gitsearch)
+
+This is a tool for indexing and searching git repositories. Provides github
 and bitbucket web hooks for automatic indexing. Allows searching within branches/tags across repositories.
 
 ## Installing
 
-Make sure your have [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html) Installed, then install gitsearch with:
+Make sure your have [elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html) installed and running, then install gitsearch with:
 
 ```
 npm install gitsearch -g
@@ -61,7 +63,7 @@ The indexer will look for glob path patterns in a file named `.gitsearchignore` 
 ## API
 #### `indexFromURL(url, type, name, index)`
 #### `indexFromPath(path, type, name, index)`
-#### `indexFromRepository(name, type, source, index)`
+#### `indexFromRepository(source, type, name, index)`
 
 ## License
 The MIT License (MIT)

@@ -47,7 +47,7 @@ yargs.command('watch', 'Watches the hooks for repositories', (yargs) => {
 const actions = {
 
   index: args => {
-    return actions[args._[1]];
+    return actions[args._[1]](args);
   },
 
   local: args => {

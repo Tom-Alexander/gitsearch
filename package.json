@@ -1,11 +1,17 @@
 {
   "name": "gitsearch",
   "version": "0.0.1",
-  "description": "git repository indexer and client for elasticsearch",
+  "description": "git repository indexer and client",
   "main": "index.js",
-  "author": "Tom Alexander <npm@tomalexander.co.nz>",
+  "author": "Tom Alexander <me@tomalexander.co.nz>",
   "scripts": {
-    "test": "./node_modules/.bin/mocha spec"
+    "start": "node ./source/cli.js",
+    "test": "./node_modules/.bin/mocha spec",
+    "lint": "./node_modules/.bin/eslint ./source/**"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "gitsearch": "./source/cli.js"
   },
   "license": "MIT",
   "dependencies": {

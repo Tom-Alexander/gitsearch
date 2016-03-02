@@ -43,7 +43,6 @@ function serve(host, index, port) {
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'handlebars');
   app.listen(port);
-  console.log(__dirname);
   const search = searcher(host, index);
 
   app.get('/', (request, response) => {
