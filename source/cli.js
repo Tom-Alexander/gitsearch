@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const indexer = require('./indexer');
+const process = require('process');
 const serve = require('./serve');
 const watch = require('./watch');
 const yargs = require('yargs');
+const path = require('path');
 
 yargs.command('index', 'indexes a git repository', (yargs) => {
   return yargs.command('remote', 'indexes a remote repository', yargs => {
@@ -50,7 +52,7 @@ const actions = {
 
   local: args => {
     return indexer.indexFromPath(
-      args.path,
+      path.resolve(path.join(process.cwd(), args.path)),
       args.type,
       args.name,
       indexer.indexer(args.host, args.index)

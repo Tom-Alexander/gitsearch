@@ -23,8 +23,8 @@ const transformers = {
 
   GITHUB: request => ({
     type: 'GITHUB',
+    name: request.body.repository.full_name,
     url: 'git@github.com:' + request.body.repository.full_name + '.git',
-    name: request.body.repository.full_name
   }),
 
   BITBUCKET: request => ({
