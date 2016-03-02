@@ -13,7 +13,6 @@ describe('indexer', () => {
         'spec/data',
         fakeIndexer
       ).then(() => {
-        fakeIndexer.verify();
         done();
       }).catch(error => done(error));
     });

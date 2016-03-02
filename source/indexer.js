@@ -165,12 +165,13 @@ function indexer(host, indexName) {
 
 /**
  * Indexes a repository from a NodeGit Repository
- * @param  {String} name
  * @param  {NodeGit.Repository} source
+ * @param  {String} type
+ * @param  {String} name
  * @param  {Function} index
  * @return {Promise}
  */
-function indexFromRepository(name, type, source, index) {
+function indexFromRepository(source, type, name, index) {
     return ignoreList(source).then(ignores =>
         source.getReferences(Git.Reference.TYPE.OID)
             .then(refs => fromReferences(refs, name, type, ignores)
@@ -197,9 +198,9 @@ function indexFromRepository(name, type, source, index) {
 function indexFromPath(path, type, name, index) {
     return Git.Repository.open(path)
         .then(repository => indexFromRepository(
-            name,
-            type,
             repository,
+            type,
+            name,
             index
         )
     );
@@ -213,12 +214,12 @@ function indexFromPath(path, type, name, index) {
  * @return {Promise}
  */
 function indexFromURL(url, type, name, index) {
-    return tmp().then(
+  return tmp().then(
         directory => Git.Clone(url, directory)
             .then(repository => indexFromRepository(
-                name,
+              repository,
                 type,
-                repository,
+                name,
                 index
             )));
 }
