@@ -1,6 +1,8 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 const Promise = require('bluebird');
 const basic = require('basic-auth');
+const crypto = require('crypto');
 
 function auth(name, password) {
   return (request, response, next) => {
@@ -13,27 +15,52 @@ function auth(name, password) {
   }
 }
 
-function watch(port, user, password, indexFromURL) {
+function hash(value) {
+  return crypto.createHash('md5').update(value).digest('hex');
+}
 
+const transformers = {
+
+  GITHUB: request => ({
+    type: 'GITHUB',
+    url: request.body.repository.url,
+    name: request.body.repository.full_name
+  }),
+
+  BITBUCKET: request => ({
+    type: 'BITBUCKET',
+    name: request.body.repository.full_name,
+    url: 'https://bitbucket.org/' + request.body.repository.full_name + '.git'
+  })
+
+};
+
+function watch(port, user, password, index) {
+
+  var queue = [];
+  const path = '/queue';
   const app = express();
   app.listen(port);
-  const post = (path, fn) => app.post(path, auth(user, password), fn);
+  app.use(auth(user, password));
+  app.use(bodyParser.json());
 
-  post('/github', (request, response) => {
-    console.log(request);
-    return indexFromURL(
-      request.body.clone_url,
-      'GITHUB',
-      request.body.full_name
-    ).then(() => res.status(200));
+  app.get(path, (request, response) => response.send(queue));
+
+  app.delete(path, (request, response) => {
+      Promise.map(queue, item => index(item))
+      .all()
+      .then(() => queue = [])
+      .then(() => response.send(queue));
   });
 
-  post('/bitbucket', (request, response) => {
-    return indexFromURL(
-      'https://bitbucket.org/' + request.body.repository.full_name + '.git',
-      'BITBUCKET',
-      request.body.repository.full_name
-    ).then(() => res.status(200));
+  app.post(path, (request, response) => {
+    const transformer = transformers[request.query.type];
+    if (transformer) {
+      const repository = transformer(request);
+      const id = hash(repository.url);
+      queue[id] = repository;
+      return response.send({ id: id });
+    }
   });
 
   return app;
@@ -41,3 +68,6 @@ function watch(port, user, password, indexFromURL) {
 }
 
 module.exports = watch;
+module.exports.auth = auth;
+module.exports.hash = hash;
+module.exports.transformers = transformers;

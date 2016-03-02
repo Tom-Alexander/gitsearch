@@ -1,6 +1,5 @@
 const path = require('path');
 const sinon = require('sinon');
-const assert = require('assert');
 const indexer = require('../source/indexer.js');
 const repoPath = path.resolve(__dirname, './data');
 
