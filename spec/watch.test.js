@@ -22,7 +22,7 @@ describe('watch', () => {
     });
 
     it('indexes the repository on a github event', done => {
-      const id = watch.hash('https://github.com/baxterthehacker/public-repo');
+      const id = watch.hash('git@github.com:foo/bar.git');
       request(app)
       .post('/queue?type=GITHUB')
       .auth('foo', 'bar')
@@ -30,19 +30,12 @@ describe('watch', () => {
         commits: [],
         head_commit: {},
         repository: {
-          id: 35129377,
-          name: "public-repo",
-          full_name: "baxterthehacker/public-repo",
-          owner: {},
-          private: false,
-          description: "",
-          fork: false,
-          url: "https://github.com/baxterthehacker/public-repo",
+          full_name: 'foo/bar'
         }
       })
       .expect(200)
       .expect(response => {
-        response.body.id = id;
+        if(response.body.id !== id) throw new Error('Incorrect id');
       })
       .end((error, response) => {
         if (error) return done(error);
@@ -54,7 +47,7 @@ describe('watch', () => {
   describe('POST /queue?type=BITBUCKET', () => {
 
     it('indexes the repository on a bitbucket event', done => {
-      const id = watch.hash('https://github.com/baxterthehacker/public-repo');
+      const id = watch.hash('git@bitbucket.org:foo/bar.git');
       request(app)
       .post('/queue?type=BITBUCKET')
       .auth('foo', 'bar')
@@ -62,16 +55,15 @@ describe('watch', () => {
         repository: {
           links: {},
           uuid: "{673a6070-3421-46c9-9d48-90745f7bfe8e}",
-          full_name: "team_name/repo_name",
+          full_name: "foo/bar",
           name: "repo_name",
-          website: "https://mywebsite.com/",
           scm: "git",
           is_private: true
         },
       })
       .expect(200)
       .expect(response => {
-        // @TODO
+        if(response.body.id !== id) throw new Error('Incorrect id');
       })
       .end((error, response) => {
         if (error) return done(error);
@@ -101,7 +93,7 @@ describe('watch', () => {
       .send()
       .expect(200)
       .expect(response => {
-        // @TODO
+        if(response.body.length !== 0) throw new Error('Bad queue response');
       })
       .end((error, response) => {
         if (error) return done(error);
@@ -123,22 +115,6 @@ describe('watch', () => {
   });
 
   describe('DELETE /queue', () => {
-
-    it('deletes the entire queue', done => {
-      request(app)
-      .del('/queue')
-      .auth('foo', 'bar')
-      .send()
-      .expect(200)
-      .expect(response => {
-        // @TODO
-      })
-      .end((error, response) => {
-        if (error) return done(error);
-        done();
-      });
-    });
-
     it('Auth Failure', done => {
       request(app)
       .get('/queue')
@@ -149,8 +125,6 @@ describe('watch', () => {
         done();
       });
     });
-
   });
-
 
 });
