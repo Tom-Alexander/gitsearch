@@ -1,3 +1,4 @@
+const path = require('path');
 const Filter = require('./Filter');
 const format = require('./format');
 const express = require('express');
@@ -35,9 +36,14 @@ function equals(left, right, options) {
 function serve(host, index, port) {
 
   const app = express();
-  app.listen(port);
-  app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+  app.engine('handlebars', exphbs({
+    defaultLayout:  path.join(__dirname, 'views', 'layouts', 'main'),
+    layout: false
+  }));
+  app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'handlebars');
+  app.listen(port);
+  console.log(__dirname);
   const search = searcher(host, index);
 
   app.get('/', (request, response) => {
